@@ -1,4 +1,4 @@
-import { UserType } from "@/lib/enums";
+import { UserType } from "~/lib/enums";
 import { db } from "./index.server";
 import {
   ordersTable,
@@ -7,13 +7,14 @@ import {
   usersTable,
 } from "./schema.server";
 import { faker } from "@faker-js/faker";
+import { hash } from "argon2";
 
 async function populateUsers(tx: any) {
   for (let i = 0; i <= 10; i++) {
     await tx.insert(usersTable).values({
       name: faker.person.fullName(),
       email: faker.internet.email(),
-      password: await Bun.password.hash("pass1234", "argon2id"),
+      password: await hash("pass1234"),
       type: UserType.CUSTOMER,
       phone: faker.phone.number({ style: "international" }),
     });
@@ -21,7 +22,7 @@ async function populateUsers(tx: any) {
   await tx.insert(usersTable).values({
     name: faker.person.fullName(),
     email: "admin@test.com",
-    password: await Bun.password.hash("pass1234", "argon2id"),
+    password: await hash("pass1234"),
     type: UserType.ADMIN,
     phone: faker.phone.number({ style: "international" }),
   });
