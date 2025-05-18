@@ -1,6 +1,6 @@
 import { useCart } from "~/providers/cart-provider";
 import { calculateDiscount, cn, getImageSrc } from "~/lib/utils";
-import { type Product } from "~/database/schema";
+import { type Product } from "~/lib/types";
 import { NumericFormat, type NumericFormatProps } from "react-number-format";
 
 import {

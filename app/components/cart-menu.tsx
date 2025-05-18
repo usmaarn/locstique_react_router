@@ -1,11 +1,7 @@
 import { type CartItem } from "~/lib/types";
-import {
-  calculateDiscount,
-  calculatePercentage,
-  getImageSrc,
-} from "~/lib/utils";
+import { calculateDiscount, getImageSrc } from "~/lib/utils";
 import { DeleteOutlined, ShoppingCartOutlined } from "@ant-design/icons";
-import { Link } from "react-router";
+import { Link, useNavigation } from "react-router";
 import {
   Badge,
   Button,
@@ -16,7 +12,7 @@ import {
   Space,
   Typography,
 } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ProductProvider, ProductTitle, RemoveFromCartButton } from "./product";
 import { PriceFormat } from "./price-format";
 import { useCart } from "~/providers/cart-provider";
@@ -24,12 +20,17 @@ import { useCart } from "~/providers/cart-provider";
 const CartMenu = () => {
   const cart = useCart();
   const [open, setOpen] = useState(false);
+  const navigation = useNavigation();
 
   const totalAmount = cart.items.reduce(
     (acc, item) =>
       acc + item.quantity * calculateDiscount(item.price, item.discount),
     0
   );
+
+  useEffect(() => {
+    setOpen(false);
+  }, [navigation.location]);
 
   return (
     <>

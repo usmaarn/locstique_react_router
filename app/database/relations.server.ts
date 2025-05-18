@@ -6,7 +6,7 @@ import {
   productsTable,
   reviewsTable,
   usersTable,
-} from "./schema";
+} from "./schema.server";
 
 export const productRelations = relations(productsTable, ({ one, many }) => ({
   carts: many(cartsTable),

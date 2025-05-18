@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { userService } from "~/services/user-service";
+import { userService } from "~/services/user-service.server";
 
 export const registerSchema = z
   .object({

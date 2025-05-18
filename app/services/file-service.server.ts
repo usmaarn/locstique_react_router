@@ -3,8 +3,8 @@ import * as fs from "node:fs/promises";
 import path from "node:path";
 import { v7 } from "uuid";
 
-const TEMP_DIR = path.join(process.cwd(), "storage", "tmp");
-const UPLOAD_DIR = path.join(process.cwd(), "public");
+const TEMP_DIR = path.join(process.cwd(), "storage/tmp");
+const UPLOAD_DIR = path.join(process.cwd(), "public/uploads");
 
 export const storage = new LocalFileStorage(UPLOAD_DIR);
 

@@ -5,12 +5,13 @@ import {
   LogoutOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { useNavigate } from "react-router";
-import { Avatar, Dropdown } from "antd";
+import { useFetcher, useNavigate } from "react-router";
+import { Avatar, Dropdown, Spin } from "antd";
 
 const UserMenu = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const fetcher = useFetcher();
 
   if (!user) return null;
 
@@ -33,19 +34,23 @@ const UserMenu = () => {
       icon: <LogoutOutlined />,
       label: "Logout",
       danger: true,
-      // onClick: async () => await handleLogout(),
+      onClick: () =>
+        fetcher.submit(null, { method: "POST", action: "/logout" }),
     },
   ];
 
   return (
-    <Dropdown
-      trigger="click"
-      menu={{ items: items.filter((item) => !item.hide) }}
-    >
-      <button className="cursor-pointer">
-        <Avatar icon={<UserOutlined />} />
-      </button>
-    </Dropdown>
+    <>
+      <Spin spinning={fetcher.state != "idle"} fullscreen />
+      <Dropdown
+        trigger="click"
+        menu={{ items: items.filter((item) => !item.hide) }}
+      >
+        <button className="cursor-pointer">
+          <Avatar icon={<UserOutlined />} />
+        </button>
+      </Dropdown>
+    </>
   );
 };
 

@@ -1,16 +1,16 @@
 import { calculateDiscount } from "~/lib/utils";
-import { orderService } from "./order-service";
+import { orderService } from "./order-service.server";
 import { OrderStatus } from "~/lib/enums";
-import { mailService } from "./mail-service";
+import { mailService } from "./mail-service.server";
 import {
   ordersTable,
   productOrderTable,
   type Order,
   type User,
-} from "~/database/schema";
+} from "~/database/schema.server";
 import { paymentSuccessfulTemplate } from "~/mail-templates/payment-successful";
-import { db } from "~/database";
-import { productService } from "./product-service";
+import { db } from "~/database/index.server";
+import { productService } from "./product-service.server";
 
 export type OrderItem = {
   id: string;

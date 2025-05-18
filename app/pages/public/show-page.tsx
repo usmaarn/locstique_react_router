@@ -1,5 +1,5 @@
-import { settingsService } from "~/services/settings-service";
-import type { Route } from "./+types";
+import { settingsService } from "~/services/settings-service.server";
+import type { Route } from "./+types/show-page";
 import { data } from "react-router";
 
 export function meta({ params }: Route.MetaArgs) {
@@ -10,7 +10,7 @@ export function meta({ params }: Route.MetaArgs) {
 export async function loader({ params }: Route.LoaderArgs) {
   const settings = await settingsService.get(params.page!);
   if (!settings) throw data({ message: "Product Not Found" }, 404);
-  return { page: settings.value };
+  return { page: settings.value as any };
 }
 
 export default function Page({ loaderData: { page } }: Route.ComponentProps) {

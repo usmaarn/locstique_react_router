@@ -1,13 +1,13 @@
 import { config } from "~/lib/config";
-import type { Route } from "./+types";
+import type { Route } from "./+types/checkout";
 import { redirect, useFetcher } from "react-router";
 import type { CartItem } from "~/lib/types";
 import { Col, Form, Row } from "antd";
 import { CheckoutFallback } from "~/components/fallbacks/checkout-fallback";
 import CheckoutSummary from "~/components/checkout-summary";
 import CheckoutItems from "~/components/checkout-items";
-import { paymentService } from "~/services/payment-service";
-import { userService } from "~/services/user-service";
+import { paymentService } from "~/services/payment-service.server";
+import { userService } from "~/services/user-service.server";
 
 export async function clientLoader({ params }: Route.ClientLoaderArgs) {
   const itemsJson = localStorage.getItem(config.storage.cartName);

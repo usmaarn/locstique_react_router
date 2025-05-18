@@ -3,23 +3,23 @@ import {
   sessionsTable,
   type User,
   usersTable,
-} from "@/database/schema";
+} from "~/database/schema.server";
 
 import {
   encodeBase32LowerCaseNoPadding,
   encodeHexLowerCase,
 } from "@oslojs/encoding";
-import { db } from "@/database";
+import { db } from "~/database/index.server";
 import { sha256 } from "@oslojs/crypto/sha2";
 import { eq } from "drizzle-orm";
 
-class TokenService {
+export const sessionService = {
   generateSessionToken(): string {
     const bytes = new Uint8Array(20);
     crypto.getRandomValues(bytes);
     const token = encodeBase32LowerCaseNoPadding(bytes);
     return token;
-  }
+  },
 
   async create(token: string, userId: string): Promise<Session> {
     const sessionId = encodeHexLowerCase(
@@ -32,7 +32,7 @@ class TokenService {
     };
     await db.insert(sessionsTable).values(session);
     return session;
-  }
+  },
 
   async validateSessionToken(
     sessionId: string
@@ -62,18 +62,16 @@ class TokenService {
         .where(eq(sessionsTable.id, session.id));
     }
     return { session, user };
-  }
+  },
 
   async invalidate(sessionId: string): Promise<void> {
     await db.delete(sessionsTable).where(eq(sessionsTable.id, sessionId));
-  }
+  },
 
   async invalidateAll(userId: string): Promise<void> {
     await db.delete(sessionsTable).where(eq(sessionsTable.userId, userId));
-  }
-}
-
-export const tokenService = new TokenService();
+  },
+};
 
 type SessionValidationResult =
   | { session: Session; user: User }

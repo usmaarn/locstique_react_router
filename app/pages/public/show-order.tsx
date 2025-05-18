@@ -1,26 +1,32 @@
-import { orderService } from "~/services/order-service";
-import type { Route } from "./+types";
-import { paymentService, type OrderItem } from "~/services/payment-service";
+import { orderService } from "~/services/order-service.server";
+import type { Route } from "./+types/show-order";
+import {
+  paymentService,
+  type OrderItem,
+} from "~/services/payment-service.server";
 import { data } from "react-router";
 import { Avatar, Card, Col, Input, List, Row, Space, Tag } from "antd";
 import { calculateDiscount, getImageSrc } from "~/lib/utils";
 import { OrderStatus } from "~/lib/enums";
 import { PriceFormat } from "~/components/price-format";
+import type { Order } from "~/database/schema.server";
 
 export async function loader({ params }: Route.LoaderArgs) {
   const order = await orderService.findById(params.id!);
-  if (order) {
-    const response = await paymentService.verifyOrderPayment(order);
-    if (response?.success) {
-      return { order: response.data };
-    }
-    return { order: { ...order, status: 0 } };
+  if (!order) {
+    throw data({ message: "Order not found" }, 404);
   }
-  return data({ message: "Order not found" }, 404);
+
+  const response = await paymentService.verifyOrderPayment(order);
+  if (response?.success) {
+    return { order: response.data };
+  }
+  return { order: { ...order, status: 0 } };
 }
 
-export default function Page({ loaderData: { order } }: Route.ComponentProps) {
-  const totalAmount = order.items.reduce(
+export default function Page({ loaderData }: Route.ComponentProps) {
+  const order = loaderData.order as Order;
+  const totalAmount = order?.items.reduce(
     (total: number, item: any) => total + item.price * item.quantity,
     0
   );

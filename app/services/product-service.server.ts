@@ -1,14 +1,14 @@
-import { db } from "~/database";
-import { type Product, productsTable } from "~/database/schema";
+import { db } from "~/database/index.server";
+import { type Product, productsTable } from "~/database/schema.server";
 import { eq } from "drizzle-orm";
 import type {
   CreateProductDto,
   UpdateProductDto,
 } from "~/schemas/product-schema";
-import { uploadService } from "./file-service";
+import { uploadService } from "./file-service.server";
 
 export const productService = {
-  async queryProducts(query: any): Promise<Product[]> {
+  queryProducts: async (query: any): Promise<Product[]> => {
     const size = query?.size ? parseInt(query.size) : undefined;
     const page = query?.page ? parseInt(query.page) : undefined;
 
@@ -34,7 +34,7 @@ export const productService = {
     const images: string[] = [];
 
     for (const image of dto.images) {
-      images.push(await uploadService.storeFile(image, "products"));
+      if (image) images.push(await uploadService.storeFile(image, "products"));
     }
 
     const result = await db

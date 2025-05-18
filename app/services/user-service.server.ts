@@ -1,5 +1,5 @@
-import { db } from "~/database";
-import { usersTable } from "~/database/schema";
+import { db } from "~/database/index.server";
+import { usersTable } from "~/database/schema.server";
 import type { UserType } from "~/lib/enums";
 import type { registerSchema } from "~/schemas/user-schema";
 import type { z } from "zod";

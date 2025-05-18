@@ -1,11 +1,11 @@
 import { useAuth } from "~/hooks/use-auth";
 import { MenuOutlined } from "@ant-design/icons";
 import { Button, Drawer, Flex, Layout, Menu } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AppLogo from "./app-logo";
 import CartMenu from "./cart-menu";
+import { Link, useNavigate, useNavigation } from "react-router";
 import UserMenu from "./user-menu";
-import { Link, useNavigate } from "react-router";
 
 const menuItems = [
   {
@@ -26,6 +26,11 @@ const Navbar = () => {
   const auth = useAuth();
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    setOpen(false);
+  }, [navigation.location]);
 
   return (
     <Layout.Header className="bg-white! px-3! md:h-24!">

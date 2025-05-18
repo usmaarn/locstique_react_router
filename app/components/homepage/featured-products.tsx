@@ -2,7 +2,7 @@ import { ArrowRightOutlined } from "@ant-design/icons";
 import { Link } from "react-router";
 import { Button, Typography } from "antd";
 import ProductCard from "../product-card";
-import type { Product } from "~/database/schema";
+import type { Product } from "~/database/schema.server";
 
 const FeaturedProducts = ({ products }: { products?: Product[] }) => {
   return (

@@ -1,5 +1,5 @@
-import { db } from "~/database";
-import { settingsTable } from "~/database/schema";
+import { db } from "~/database/index.server";
+import { settingsTable } from "~/database/schema.server";
 
 export const settingsService = {
   async get(name: string) {

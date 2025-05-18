@@ -11,7 +11,7 @@ import {
 } from "drizzle-orm/pg-core";
 import type { InferSelectModel } from "drizzle-orm";
 import { OrderStatus, UserType } from "~/lib/enums";
-import { generateUnqueString } from "~/lib/helper";
+import { generateUnqueString } from "~/lib/helper.server";
 import { v7 as uuidV7 } from "uuid";
 
 export const usersTable = pgTable("users", {

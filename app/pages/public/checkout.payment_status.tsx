@@ -1,6 +1,6 @@
-import type { Route } from "./+types";
-import { paymentService } from "~/services/payment-service";
-import { userService } from "~/services/user-service";
+import type { Route } from "./+types/checkout.payment_status";
+import { paymentService } from "~/services/payment-service.server";
+import { userService } from "~/services/user-service.server";
 import { OrderStatus } from "~/lib/enums";
 import { config } from "~/lib/config";
 import { Link, redirect } from "react-router";
@@ -38,7 +38,7 @@ export async function clientLoader({
 
   const response = await serverLoader();
   if (response.paymentStatus === OrderStatus.PENDING_DELIVERY) {
-    // localStorage.removeItem(config.storage.cartName);
+    localStorage.removeItem(config.storage.cartName);
   }
   return response;
 }

@@ -9,7 +9,10 @@
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
+    "@ant-design/charts": "^2.3.0",
     "@mjackson/file-storage": "^0.6.1",
+    "@oslojs/crypto": "^1.0.1",
+    "@oslojs/encoding": "^1.1.0",
     "@react-router/node": "^7.5.3",
     "@react-router/serve": "^7.5.3",
     "argon2": "^0.43.0",
@@ -20,6 +23,7 @@
     "postgres": "^3.4.5",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-quill-new": "^3.4.6",
     "react-router": "^7.5.3",
     "uuid": "^11.1.0",
     "zod": "^3.24.4"

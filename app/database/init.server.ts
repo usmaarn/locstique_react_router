@@ -1,4 +1,4 @@
-import { settingsService } from "~/services/settings-service";
+import { settingsService } from "~/services/settings-service.server";
 
 async function initialize() {
   await settingsService.set("home_page", {

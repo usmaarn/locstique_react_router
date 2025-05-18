@@ -1,7 +1,7 @@
 import { Skeleton, Space, Typography } from "antd";
 import ProductsFilter from "~/components/products-filter";
 import type { Route } from "./+types";
-import { productService } from "~/services/product-service";
+import { productService } from "~/services/product-service.server";
 import ProductCard from "~/components/product-card";
 
 export function meta({}: Route.MetaArgs) {

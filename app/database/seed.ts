@@ -1,11 +1,11 @@
 import { UserType } from "@/lib/enums";
-import { db } from ".";
+import { db } from "./index.server";
 import {
   ordersTable,
   productOrderTable,
   productsTable,
   usersTable,
-} from "./schema";
+} from "./schema.server";
 import { faker } from "@faker-js/faker";
 
 async function populateUsers(tx: any) {

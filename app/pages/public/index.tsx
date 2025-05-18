@@ -3,8 +3,8 @@ import type { Route } from "./+types";
 import FeaturedProducts from "~/components/homepage/featured-products";
 import BannerSection from "~/components/homepage/banner-section";
 import FeaturesSection from "~/components/homepage/features-section";
-import { settingsService } from "~/services/settings-service";
-import { productService } from "~/services/product-service";
+import { settingsService } from "~/services/settings-service.server";
+import { productService } from "~/services/product-service.server";
 import { Link } from "react-router";
 import { Button } from "antd";
 

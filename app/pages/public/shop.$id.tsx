@@ -1,4 +1,4 @@
-import { productService } from "~/services/product-service";
+import { productService } from "~/services/product-service.server";
 import type { Route } from "./+types";
 import { data } from "react-router";
 import {
@@ -26,7 +26,7 @@ import { useEffect, useState } from "react";
 import { getImageSrc } from "~/lib/utils";
 import { RollbackOutlined } from "@ant-design/icons";
 import ProductCard from "~/components/product-card";
-import { reviewService } from "~/services/review-service";
+import { reviewService } from "~/services/review-service.server";
 
 export function meta({ params }: Route.MetaArgs) {
   // const product = await productService.findById(params.id!);

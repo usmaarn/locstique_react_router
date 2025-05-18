@@ -1,4 +1,4 @@
-import { message } from "antd";
+import { message, type FormInstance } from "antd";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -13,22 +13,21 @@ export function calculatePercentage(num: number, percentage: number) {
   return (num / 100) * percentage;
 }
 
-export function formatError(error: any) {
-  if (error.status === 400) {
-    return (
-      error.response?.data?.errors
-        ? Object.entries(error.response.data.errors).map(([name, err]) => ({
-            name,
-            errors: [err],
-          }))
-        : []
-    ) as any;
+export function setFieldErrors(
+  form: FormInstance,
+  errors: Record<string, string> | undefined
+) {
+  if (errors) {
+    const errorMap = Object.entries(errors).map(([name, err]) => ({
+      name,
+      errors: [err],
+    }));
+    form.setFields(errorMap);
   }
-  message.error("An error occurred");
 }
 
 export function getImageSrc(value: string) {
-  return value.startsWith("http") ? value : "/" + value;
+  return value.startsWith("http") ? value : "/uploads/" + value;
 }
 
 export function sleep(miliseconds: number) {

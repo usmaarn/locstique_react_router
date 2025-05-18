@@ -6,7 +6,7 @@ import {
   useState,
   type PropsWithChildren,
 } from "react";
-import type { Product } from "~/database/schema";
+import type { Product } from "~/lib/types";
 import { config } from "~/lib/config";
 import type { CartItem } from "~/lib/types";
 

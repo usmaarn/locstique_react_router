@@ -1,8 +1,8 @@
 import { eq } from "drizzle-orm";
 import { z } from "zod";
-import { uploadService } from "./file-service";
-import { db } from "~/database";
-import { reviewsTable, type Review } from "~/database/schema";
+import { uploadService } from "./file-service.server";
+import { db } from "~/database/index.server";
+import { reviewsTable, type Review } from "~/database/schema.server";
 
 const createReviewSchema = z.object({
   user: z.string().nonempty({ message: "User is required" }),

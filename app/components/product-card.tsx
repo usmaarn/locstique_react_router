@@ -9,7 +9,7 @@ import {
 import { Link, type LinkProps } from "react-router";
 import { Typography } from "antd";
 import { cn } from "~/lib/utils";
-import type { Product } from "~/database/schema";
+import type { Product } from "~/database/schema.server";
 
 const ProductCard = ({
   product,
