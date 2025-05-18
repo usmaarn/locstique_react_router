@@ -7,5 +7,6 @@ export default defineConfig({
   plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
   server: {
     port: Number(process.env.APP_PORT),
+    allowedHosts: ["test.locstique.com"],
   },
 });

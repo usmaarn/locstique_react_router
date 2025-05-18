@@ -4,14 +4,14 @@
   "type": "module",
   "scripts": {
     "build": "react-router build",
-    "dev": "react-router dev",
+    "dev": "react-router dev --port=3000",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc",
     "db:init": "bun ./app/database/init.server.ts",
     "db:seed": "node ./app/database/seed.server.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "app:run": "pm2 start \"pnpm dev\" --name locstique",
+    "app:run": "pm2 start \"bun dev\" --name locstique",
     "app:restart": "pm2 restart locstique",
     "app:logs": "pm2 logs locstique"
   },
