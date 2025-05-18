@@ -102,6 +102,7 @@ function Item({ item }: { item: CartItem }) {
               <Space.Compact>
                 <Button
                   onClick={() => cart.updateItem(item.id, item.quantity - 1)}
+                  disabled={item.quantity <= 1}
                   icon={<MinusOutlined />}
                 />
                 <InputNumber

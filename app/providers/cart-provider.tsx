@@ -62,7 +62,11 @@ export function CartProvider({ children }: PropsWithChildren) {
   }
 
   function updateItem(itemId: string, quantity: number) {
-    saveItems(items.map((i) => (i.id === itemId ? { ...i, quantity } : i)));
+    saveItems(
+      items.map((i) =>
+        i.id === itemId ? { ...i, quantity: quantity < 1 ? 1 : quantity } : i
+      )
+    );
   }
 
   useEffect(() => {
