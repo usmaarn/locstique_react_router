@@ -1,6 +1,6 @@
 import { Button, Card, Modal, Table } from "antd";
 import type { Route } from "./+types/feedbacks";
-import { db } from "~/database/index.server";
+import { db } from "~/database/client.server";
 import type { Feedback } from "~/database/schema.server";
 import { useMemo } from "react";
 

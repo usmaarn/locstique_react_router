@@ -1,7 +1,7 @@
 import { Space } from "antd";
 import { and, eq, ne, sql } from "drizzle-orm";
 import { SectionCards } from "~/components/dashboard/section-card";
-import { db } from "~/database/index.server";
+import { db } from "~/database/client.server";
 import {
   ordersTable,
   productOrderTable,

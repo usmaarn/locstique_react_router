@@ -1,4 +1,4 @@
-import { db } from "~/database/index.server";
+import { db } from "~/database/client.server";
 import { settingsTable } from "~/database/schema.server";
 
 export const settingsService = {

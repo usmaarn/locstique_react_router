@@ -1,5 +1,5 @@
 import { UserType } from "~/lib/enums";
-import { db } from "./index.server";
+import { db } from "./client.server";
 import {
   ordersTable,
   productOrderTable,

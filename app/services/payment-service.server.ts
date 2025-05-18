@@ -9,7 +9,7 @@ import {
   type User,
 } from "~/database/schema.server";
 import { paymentSuccessfulTemplate } from "~/mail-templates/payment-successful";
-import { db } from "~/database/index.server";
+import { db } from "~/database/client.server";
 import { productService } from "./product-service.server";
 
 export type OrderItem = {

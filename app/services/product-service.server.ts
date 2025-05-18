@@ -1,4 +1,4 @@
-import { db } from "~/database/index.server";
+import { db } from "~/database/client.server";
 import { type Product, productsTable } from "~/database/schema.server";
 import { eq } from "drizzle-orm";
 import type {

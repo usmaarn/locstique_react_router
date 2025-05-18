@@ -6,7 +6,7 @@ import { config } from "~/lib/config";
 import { SendOutlined } from "@ant-design/icons";
 import { z } from "zod";
 import { validateSchema } from "~/lib/helper.server";
-import { db } from "~/database/index.server";
+import { db } from "~/database/client.server";
 import { feedbacksTable } from "~/database/schema.server";
 import { setFieldErrors } from "~/lib/utils";
 import { useFetcher } from "react-router";

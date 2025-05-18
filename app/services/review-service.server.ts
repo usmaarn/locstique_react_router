@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { uploadService } from "./file-service.server";
-import { db } from "~/database/index.server";
+import { db } from "~/database/client.server";
 import { reviewsTable, type Review } from "~/database/schema.server";
 
 const createReviewSchema = z.object({
