@@ -2481,28 +2481,6 @@ const paymentService = {
     }
   }
 };
-const userService = {
-  async findByEmail(email) {
-    const result = db.query.usersTable.findFirst({
-      where: (t, fn) => fn.eq(t.email, email)
-    });
-    return result;
-  },
-  async findByType(type) {
-    return db.query.usersTable.findMany({
-      where: (t, fn) => fn.eq(t.type, type)
-    });
-  },
-  async create(dto, type) {
-    const result = await db.insert(usersTable).values({
-      name: dto.name,
-      email: dto.email,
-      type,
-      password: await argon2.hash(dto.password)
-    }).returning();
-    return result[0];
-  }
-};
 async function clientLoader$1({
   params
 }) {
@@ -2521,19 +2499,24 @@ async function action$8({
   const formData = await request.formData();
   const items = JSON.parse(formData.get("items") ?? "[]");
   const address = formData.get("address");
-  const user = await userService.findByEmail("admin@test.com");
-  if (user) {
-    const response = await paymentService.makePayment(user, {
-      items,
-      address
-    });
-    if (response.redirectUrl) {
-      return redirect(response.redirectUrl);
+  const session = await getSession(request.headers.get("Cookie"));
+  const sessionId = session.get("userId");
+  if (sessionId) {
+    const result = await sessionService.validateSessionToken(sessionId);
+    if (result.user) {
+      const response = await paymentService.makePayment(result.user, {
+        items,
+        address
+      });
+      if (response.redirectUrl) {
+        return redirect(response.redirectUrl);
+      }
+      return {
+        message: "Unable to perform action"
+      };
     }
-    return {
-      message: "Unable to perform action"
-    };
   }
+  return redirect(`/login?redirect_url=${request.url}`);
 }
 const checkout = withComponentProps(function Page4({
   loaderData: {
@@ -2742,6 +2725,28 @@ const route8 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProper
   default: showOrder,
   loader: loader$b
 }, Symbol.toStringTag, { value: "Module" }));
+const userService = {
+  async findByEmail(email) {
+    const result = db.query.usersTable.findFirst({
+      where: (t, fn) => fn.eq(t.email, email)
+    });
+    return result;
+  },
+  async findByType(type) {
+    return db.query.usersTable.findMany({
+      where: (t, fn) => fn.eq(t.type, type)
+    });
+  },
+  async create(dto, type) {
+    const result = await db.insert(usersTable).values({
+      name: dto.name,
+      email: dto.email,
+      type,
+      password: await argon2.hash(dto.password)
+    }).returning();
+    return result[0];
+  }
+};
 async function loader$a({
   request
 }) {

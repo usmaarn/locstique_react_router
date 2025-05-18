@@ -11,7 +11,7 @@
     "db:seed": "node ./app/database/seed.server.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "app:run": "pm2 start \"bun dev\" --name locstique",
+    "app:run": "pm2 start \"pnpm start\" --name locstique",
     "app:restart": "pm2 restart locstique",
     "app:logs": "pm2 logs locstique"
   },

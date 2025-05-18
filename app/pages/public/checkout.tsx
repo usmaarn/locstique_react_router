@@ -7,7 +7,8 @@ import { CheckoutFallback } from "~/components/fallbacks/checkout-fallback";
 import CheckoutSummary from "~/components/checkout-summary";
 import CheckoutItems from "~/components/checkout-items";
 import { paymentService } from "~/services/payment-service.server";
-import { userService } from "~/services/user-service.server";
+import { getSession } from "~/session.server";
+import { sessionService } from "~/services/session-service.server";
 
 export async function clientLoader({ params }: Route.ClientLoaderArgs) {
   const itemsJson = localStorage.getItem(config.storage.cartName);
@@ -22,14 +23,23 @@ export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
   const items = JSON.parse((formData.get("items") as string) ?? "[]");
   const address = formData.get("address") as string;
-  const user = await userService.findByEmail("admin@test.com");
-  if (user) {
-    const response = await paymentService.makePayment(user, { items, address });
-    if (response.redirectUrl) {
-      return redirect(response.redirectUrl);
+
+  const session = await getSession(request.headers.get("Cookie"));
+  const sessionId = session.get("userId");
+  if (sessionId) {
+    const result = await sessionService.validateSessionToken(sessionId);
+    if (result.user) {
+      const response = await paymentService.makePayment(result.user, {
+        items,
+        address,
+      });
+      if (response.redirectUrl) {
+        return redirect(response.redirectUrl);
+      }
+      return { message: "Unable to perform action" };
     }
-    return { message: "Unable to perform action" };
   }
+  return redirect(`/login?redirect_url=${request.url}`);
 }
 
 export default function Page({ loaderData: { items } }: Route.ComponentProps) {
