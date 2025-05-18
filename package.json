@@ -8,7 +8,7 @@
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc",
     "db:init": "bun ./app/database/init.server.ts",
-    "db:seed": "bun ./app/database/seed.server.ts",
+    "db:seed": "node ./app/database/seed.server.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "app:run": "pm2 start \"pnpm dev\" --name locstique",
