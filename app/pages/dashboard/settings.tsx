@@ -6,12 +6,15 @@ import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { settingsService } from "~/services/settings-service.server";
 import { error } from "console";
+import { PaymentSettings } from "~/components/dashboard/payment-settings";
+import ErrorPage from "~/components/error-page";
 
 export async function loader({ params }: Route.LoaderArgs) {
   const record = await settingsService.get(params.page);
   if (record) {
     return { settings: record.value };
   }
+  return { settings: {} };
   throw error("Page not found", 404);
 }
 
@@ -21,7 +24,7 @@ export async function action({ params, request }: Route.LoaderArgs) {
   return { success: true };
 }
 
-export default function Page({ params }: Route.ComponentProps) {
+export default function Page({ params, loaderData }: Route.ComponentProps) {
   const navigate = useNavigate();
   const pages = [
     {
@@ -44,16 +47,29 @@ export default function Page({ params }: Route.ComponentProps) {
       label: "Refund Policy",
       children: <PageSettings />,
     },
+    {
+      key: "payment",
+      label: "Payment Settings",
+      children: <PaymentSettings />,
+    },
   ];
 
-  const [currentPage, setCurrentPage] = useState(pages[0]);
+  const [currentPage, setCurrentPage] = useState<any>(pages[0]);
 
   useEffect(() => {
     const page = pages.find((p) => p.key === params.page);
-    if (page) {
-      setCurrentPage(page);
-    }
+    setCurrentPage(page);
   }, [params.page]);
+
+  if (!currentPage) {
+    return (
+      <ErrorPage
+        status={404}
+        message="Page Not Found"
+        details="The page you are looking for does not exist"
+      />
+    );
+  }
 
   return (
     <>

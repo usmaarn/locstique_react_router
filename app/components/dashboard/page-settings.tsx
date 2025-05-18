@@ -1,6 +1,6 @@
 import { Button, Form, Input, message, Spin } from "antd";
 import { useEffect } from "react";
-import { useFetcher, useLoaderData, useParams } from "react-router";
+import { useFetcher, useLoaderData } from "react-router";
 import { Editor } from "../editor";
 
 export function PageSettings() {
@@ -10,8 +10,8 @@ export function PageSettings() {
   const [form] = Form.useForm();
 
   useEffect(() => {
-    form.setFieldValue("title", settings.title);
-    form.setFieldValue("content", settings.content);
+    // form.setFieldValue("title", settings.title);
+    // form.setFieldValue("content", settings.content);
   }, [settings]);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export function PageSettings() {
   return (
     <Spin spinning={fetcher.state != "idle"}>
       <Form
-        initialValues={settings}
+        // initialValues={settings}
         layout="vertical"
         onFinish={(v) =>
           fetcher.submit(v, { method: "PUT", encType: "application/json" })

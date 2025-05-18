@@ -1,12 +1,9 @@
 import {
-  isRouteErrorResponse,
-  Link,
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
-  useNavigate,
   useNavigation,
 } from "react-router";
 
@@ -14,10 +11,11 @@ import type { Route } from "./+types/root";
 import "./styles/app.css";
 import AppProvider from "./providers/app-provider";
 import "@ant-design/v5-patch-for-react-19";
-import { Button, Result, Space, Spin } from "antd";
+import { Spin } from "antd";
 import { config } from "./lib/config";
 import { getSession } from "./session.server";
 import { sessionService } from "./services/session-service.server";
+import ErrorPage from "./components/error-page";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -97,40 +95,18 @@ export default function App() {
   return <Outlet />;
 }
 
-export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  const navigate = useNavigate();
-  let details = "An unexpected error occurred.";
-  let message = "Interna Server Error";
-  let status = 500;
-  // console.log(error);
-
-  if (isRouteErrorResponse(error)) {
-    if (error.status === 404) {
-      message = "Page Not Found";
-      status = 404;
-      details = "The page you are looking for does not exist";
-    }
-  }
-
+export function ErrorBoundary({
+  error,
+}: Route.ErrorBoundaryProps & { error: any }) {
   return (
-    <main className="pt-16 p-4 container mx-auto">
-      <Result
-        status={status as 500}
-        title={message}
-        subTitle={details}
-        extra={
-          <Space>
-            <Link to="/">
-              <Button type="primary">Back to Home</Button>
-            </Link>
-            {status !== 404 && (
-              <Button onClick={() => navigate(0)} color="blue" variant="solid">
-                Reload Page
-              </Button>
-            )}
-          </Space>
-        }
-      />
-    </main>
+    <ErrorPage
+      status={error?.status === 404 ? 404 : 500}
+      message={error.status === 404 ? "Page Not Found" : undefined}
+      details={
+        error.status === 404
+          ? "The page you are looking for does not exist"
+          : undefined
+      }
+    />
   );
 }

@@ -11,6 +11,7 @@ import {
 import { paymentSuccessfulTemplate } from "~/mail-templates/payment-successful";
 import { db } from "~/database/client.server";
 import { productService } from "./product-service.server";
+import { settingsService } from "./settings-service.server";
 
 export type OrderItem = {
   id: string;
@@ -68,20 +69,27 @@ export const paymentService = {
           return { success: false };
         }
 
+        const settings = await settingsService.get("payment");
+        if (!settings?.value) {
+          return { success: false };
+        }
+
         const response = await fetch(
           "https://api.flutterwave.com/v3/payments",
           {
             method: "POST",
             headers: {
-              Authorization: `Bearer ${process.env.FLW_SECRET_KEY}`,
+              Authorization: `Bearer ${
+                settings?.value?.secret_key ?? process.env.FLW_SECRET_KEY
+              }`,
               "Content-Type": "application/json", // Tells the server you're sending JSON
             },
             body: JSON.stringify({
               tx_ref: order.id,
               // tx_ref: generateUnqueString("TRX"),
               amount: totalAmount,
-              currency: process.env.CURRENCY,
-              redirect_url: `${process.env.APP_URL}/checkout/payment_status`,
+              currency: settings?.value?.currency ?? "USD",
+              redirect_url: settings?.value?.redirect_url,
               customer: {
                 email: user.email,
                 name: user.name,
@@ -125,12 +133,19 @@ export const paymentService = {
       return { success: false };
     }
 
+    const settings = await settingsService.get("payment");
+    if (!settings?.value) {
+      return { success: false };
+    }
+
     const response = await fetch(
       `https://api.flutterwave.com/v3/transactions/${transactionId}/verify`,
       {
         headers: {
           accept: "application/json",
-          Authorization: `Bearer ${process.env.FLW_SECRET_KEY}`,
+          Authorization: `Bearer ${
+            settings?.value?.secret_key ?? process.env.FLW_SECRET_KEY
+          }`,
           "Content-Type": "application/json",
         },
       }

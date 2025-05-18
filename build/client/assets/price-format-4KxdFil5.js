@@ -1,0 +1,1 @@
+import{j as t}from"./chunk-D4RADZKF-DAz_vGcL.js";import{N as e}from"./react-number-format.es-Bf5wJkGf.js";function i(r){return t.jsx(e,{displayType:"text",decimalScale:2,prefix:"$",thousandSeparator:!0,...r})}export{i as P};
