@@ -1,1 +1,0 @@
-ALTER TABLE "settings" ALTER COLUMN "value" TYPE jsonb USING value::jsonb;

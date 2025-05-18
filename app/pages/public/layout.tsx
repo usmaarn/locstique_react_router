@@ -1,4 +1,3 @@
-import { type PropsWithChildren } from "react";
 import { Card, FloatButton, Layout, Typography } from "antd";
 import { UpOutlined } from "@ant-design/icons";
 import Navbar from "~/components/navbar";
