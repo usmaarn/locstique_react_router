@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@ant-design/charts": "^2.3.0",
+    "@ant-design/cssinjs": "^1.23.0",
     "@faker-js/faker": "^9.8.0",
     "@mjackson/file-storage": "^0.6.1",
     "@oslojs/crypto": "^1.0.1",
