@@ -1,1 +1,0 @@
-import{b as a,j as s}from"./chunk-D4RADZKF-DaSNxZfm.js";import{B as e}from"./button-B_-uB0p2.js";function c({to:n,...t}){const o=a();return s.jsx(e,{...t,onClick:i=>t.onClick?t.onClick(i):o(n)})}export{c as B};

@@ -1,6 +1,11 @@
 import { type CartItem } from "~/lib/types";
 import { calculateDiscount, getImageSrc } from "~/lib/utils";
-import { DeleteOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  MinusOutlined,
+  PlusOutlined,
+  ShoppingCartOutlined,
+} from "@ant-design/icons";
 import { Link, useNavigation } from "react-router";
 import {
   Badge,
@@ -94,11 +99,22 @@ function Item({ item }: { item: CartItem }) {
           title={<ProductTitle className="text-sm! font-medium" />}
           description={
             <Flex justify="space-between" align="end">
-              <InputNumber
-                value={item.quantity}
-                style={{ width: 70 }}
-                onChange={(v) => cart.updateItem(item.id, v as number)}
-              />
+              <Space.Compact>
+                <Button
+                  onClick={() => cart.updateItem(item.id, item.quantity - 1)}
+                  icon={<MinusOutlined />}
+                />
+                <InputNumber
+                  value={item.quantity}
+                  style={{ width: 70 }}
+                  min={1}
+                  onChange={(v) => cart.updateItem(item.id, v as number)}
+                />
+                <Button
+                  onClick={() => cart.updateItem(item.id, item.quantity + 1)}
+                  icon={<PlusOutlined />}
+                />
+              </Space.Compact>
               <Typography.Title level={5} className="text-sm!">
                 <PriceFormat
                   value={
