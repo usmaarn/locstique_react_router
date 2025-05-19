@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { db } from "~/database/client.server";
+import { db } from "~/database/db.server";
 import { productService } from "~/services/product-service.server";
 
 export const createProductSchema = z.object({

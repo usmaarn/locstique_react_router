@@ -1,4 +1,4 @@
-import { db } from "~/database/client.server";
+import { db } from "~/database/db.server";
 import { usersTable } from "~/database/schema.server";
 import type { UserType } from "~/lib/enums";
 import type { registerSchema } from "~/schemas/user-schema";

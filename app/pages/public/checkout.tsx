@@ -2,13 +2,14 @@ import { config } from "~/lib/config";
 import type { Route } from "./+types/checkout";
 import { redirect, useFetcher } from "react-router";
 import type { CartItem } from "~/lib/types";
-import { Col, Form, Row } from "antd";
+import { Col, Form, message, Row } from "antd";
 import { CheckoutFallback } from "~/components/fallbacks/checkout-fallback";
 import CheckoutSummary from "~/components/checkout-summary";
 import CheckoutItems from "~/components/checkout-items";
 import { paymentService } from "~/services/payment-service.server";
 import { getSession } from "~/session.server";
 import { sessionService } from "~/services/session-service.server";
+import { useEffect } from "react";
 
 export async function clientLoader({ params }: Route.ClientLoaderArgs) {
   const itemsJson = localStorage.getItem(config.storage.cartName);
@@ -36,7 +37,7 @@ export async function action({ request }: Route.ActionArgs) {
       if (response.redirectUrl) {
         return redirect(response.redirectUrl);
       }
-      return { message: "Unable to perform action" };
+      return { message: response?.error ?? "Unable to perform action" };
     }
   }
   return redirect(`/login?redirect_url=${request.url}`);
@@ -57,6 +58,12 @@ export default function Page({ loaderData: { items } }: Route.ComponentProps) {
       { method: "POST" }
     );
   }
+
+  useEffect(() => {
+    if (fetcher.data?.message) {
+      message.error(fetcher.data.message);
+    }
+  }, [fetcher.data]);
 
   return (
     <Form onFinish={handleCheckout}>

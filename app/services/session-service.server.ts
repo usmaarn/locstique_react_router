@@ -9,7 +9,7 @@ import {
   encodeBase32LowerCaseNoPadding,
   encodeHexLowerCase,
 } from "@oslojs/encoding";
-import { db } from "~/database/client.server";
+import { db } from "~/database/db.server";
 import { sha256 } from "@oslojs/crypto/sha2";
 import { eq } from "drizzle-orm";
 

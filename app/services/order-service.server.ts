@@ -1,4 +1,4 @@
-import { db } from "~/database/client.server";
+import { db } from "~/database/db.server";
 import { ordersTable, productOrderTable } from "~/database/schema.server";
 import { OrderStatus } from "~/lib/enums";
 import { eq } from "drizzle-orm";

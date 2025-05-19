@@ -9,7 +9,7 @@ import {
   type User,
 } from "~/database/schema.server";
 import { paymentSuccessfulTemplate } from "~/mail-templates/payment-successful";
-import { db } from "~/database/client.server";
+import { db } from "~/database/db.server";
 import { productService } from "./product-service.server";
 import { settingsService } from "./settings-service.server";
 
@@ -110,7 +110,7 @@ export const paymentService = {
       }
 
       console.log(txResponse);
-      return { success: false };
+      return { success: false, error: txResponse?.errors?.[0]?.message };
     } catch (error) {
       return { success: false };
     }

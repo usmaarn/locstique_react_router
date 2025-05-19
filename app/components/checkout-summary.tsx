@@ -1,4 +1,4 @@
-import { Button, Card, Form } from "antd";
+import { Button, Card } from "antd";
 import { PriceFormat } from "./price-format";
 import { useLoaderData } from "react-router";
 import type { CartItem } from "~/lib/types";
@@ -12,7 +12,9 @@ const CheckoutSummary = ({ loading }: { loading: boolean }) => {
 
   const discountAmount = items.reduce(
     (cum, item) =>
-      cum + (item.price - calculateDiscount(item.price, item.discount)),
+      cum +
+      (item.price - calculateDiscount(item.price, item.discount)) *
+        item.quantity,
     0
   );
 
