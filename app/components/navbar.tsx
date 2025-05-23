@@ -33,11 +33,11 @@ const Navbar = () => {
   }, [navigation.location]);
 
   return (
-    <Layout.Header className="bg-white! px-3! md:h-24!">
+    <Layout.Header className="bg-white! px-0! md:h-24!">
       <Flex
         align="center"
         justify="space-between"
-        className="max-w-7xl! mx-auto! h-full"
+        className="max-w-7xl! mx-auto! px-5! h-full"
       >
         <div className="hidden md:flex items-center gap-5">
           {menuItems.map((item) => (

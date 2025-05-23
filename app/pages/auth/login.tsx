@@ -76,7 +76,7 @@ export default function Page(props: Route.ComponentProps) {
   }, [fetcher.data]);
 
   return (
-    <div className="max-w-[400px] mx-auto py-8">
+    <div className="max-w-[400px] mx-auto py-8 px-5">
       <Form form={form} size="large" onFinish={handleSubmit} className="w-full">
         <Typography.Title level={4}>Login</Typography.Title>
         <Typography.Paragraph>Resume your activities.</Typography.Paragraph>

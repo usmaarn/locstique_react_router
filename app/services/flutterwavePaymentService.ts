@@ -1,5 +1,5 @@
 import { calculateDiscount } from "~/lib/utils";
-import { orderService } from "./order-service.server";
+import { orderService } from "./orderService.server";
 import { OrderStatus } from "~/lib/enums";
 import { mailService } from "./mail-service.server";
 import {
@@ -18,7 +18,7 @@ export type OrderItem = {
   quantity: number;
 };
 
-export const paymentService = {
+class FlutterwavePaymentService {
   async makePayment(
     user: User,
     requestData: { items: OrderItem[]; address: string }
@@ -114,7 +114,7 @@ export const paymentService = {
     } catch (error) {
       return { success: false };
     }
-  },
+  }
 
   async verifyPayment(
     user: User,
@@ -179,7 +179,7 @@ export const paymentService = {
       return { success: true };
     }
     return { success: false };
-  },
+  }
 
   async verifyOrderPayment(order: Order) {
     try {
@@ -225,5 +225,7 @@ export const paymentService = {
     } catch (error) {
       return { success: false };
     }
-  },
-};
+  }
+}
+
+export const flutterwavePaymentService = new FlutterwavePaymentService();

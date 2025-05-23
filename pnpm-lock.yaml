@@ -26,6 +26,9 @@ importers:
       '@oslojs/encoding':
         specifier: ^1.1.0
         version: 1.1.0
+      '@paystack/inline-js':
+        specifier: ^2.22.4
+        version: 2.22.4
       '@react-router/node':
         specifier: ^7.5.3
         version: 7.6.0(react-router@7.6.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.8.3)
@@ -41,6 +44,9 @@ importers:
       drizzle-orm:
         specifier: ^0.43.1
         version: 0.43.1(postgres@3.4.5)
+      inline-js:
+        specifier: link:types/@paystack/inline-js
+        version: link:types/@paystack/inline-js
       isbot:
         specifier: ^5.1.27
         version: 5.1.28
@@ -858,6 +864,10 @@ packages:
 
   '@oslojs/encoding@1.1.0':
     resolution: {integrity: sha512-70wQhgYmndg4GCPxPPxPGevRKqTIJ2Nh4OkiMWmDAVYsTQ+Ta7Sq+rPevXyXGdzr30/qZBnyOalCszoMxlyldQ==}
+
+  '@paystack/inline-js@2.22.4':
+    resolution: {integrity: sha512-H2nmBMJGJFvdTGCeTdFrjaf2pzbnXg4wV+9HdfSnUGwpye09TUIjHkAM+Ah13AOTbWRed2cDGvXzZs8qgw+faQ==}
+    engines: {node: '>= 22.0.0'}
 
   '@phc/format@1.0.0':
     resolution: {integrity: sha512-m7X9U6BG2+J+R1lSOdCiITLLrxm+cWlNI3HUFA92oLO77ObGNzaKdh8pMLqdZcshtkKuV84olNNXDfMc4FezBQ==}
@@ -4503,6 +4513,8 @@ snapshots:
       '@oslojs/binary': 1.0.0
 
   '@oslojs/encoding@1.1.0': {}
+
+  '@paystack/inline-js@2.22.4': {}
 
   '@phc/format@1.0.0': {}
 

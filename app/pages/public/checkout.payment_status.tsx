@@ -1,5 +1,5 @@
 import type { Route } from "./+types/checkout.payment_status";
-import { paymentService } from "~/services/payment-service.server";
+import { paymentService } from "~/services/flutterwavePaymentService";
 import { userService } from "~/services/user-service.server";
 import { OrderStatus } from "~/lib/enums";
 import { config } from "~/lib/config";

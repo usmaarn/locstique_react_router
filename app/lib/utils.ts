@@ -35,3 +35,19 @@ export function sleep(miliseconds: number) {
     setTimeout(resolve, miliseconds);
   });
 }
+
+export function calculateTotalAmount(
+  items: {
+    price: number;
+    discount: number;
+    quantity: number;
+  }[]
+) {
+  let totalAmount = 0;
+  for (const item of items) {
+    const discount = calculateDiscount(item.price, item.discount);
+    const itemAmount = item.quantity * discount;
+    totalAmount += itemAmount;
+  }
+  return totalAmount;
+}

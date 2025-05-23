@@ -6,10 +6,12 @@ import { Col, Form, message, Row } from "antd";
 import { CheckoutFallback } from "~/components/fallbacks/checkout-fallback";
 import CheckoutSummary from "~/components/checkout-summary";
 import CheckoutItems from "~/components/checkout-items";
-import { paymentService } from "~/services/payment-service.server";
 import { getSession } from "~/session.server";
 import { sessionService } from "~/services/session-service.server";
 import { useEffect } from "react";
+// import PayStackPop from "@paystack/inline-js";
+import { type OrderItemDto } from "~/lib/types";
+import { checkoutService } from "~/services/checkoutService.server";
 
 export async function clientLoader({ params }: Route.ClientLoaderArgs) {
   const itemsJson = localStorage.getItem(config.storage.cartName);
@@ -21,23 +23,25 @@ export async function clientLoader({ params }: Route.ClientLoaderArgs) {
 }
 
 export async function action({ request }: Route.ActionArgs) {
-  const formData = await request.formData();
-  const items = JSON.parse((formData.get("items") as string) ?? "[]");
-  const address = formData.get("address") as string;
+  const formData = await request.json();
+  const items = JSON.parse(formData.items) as OrderItemDto[];
+
+  const deliveryAddress = formData.address as string;
 
   const session = await getSession(request.headers.get("Cookie"));
   const sessionId = session.get("userId");
+
   if (sessionId) {
-    const result = await sessionService.validateSessionToken(sessionId);
-    if (result.user) {
-      const response = await paymentService.makePayment(result.user, {
-        items,
-        address,
-      });
-      if (response.redirectUrl) {
+    const { user } = await sessionService.validateSessionToken(sessionId);
+    if (user) {
+      const response = await checkoutService
+        .processCheckout({ user, deliveryAddress, items })
+        .catch(console.log);
+      if (response?.redirect_url) {
+        console.log(response);
         return redirect(response.redirectUrl);
       }
-      return { message: response?.error ?? "Unable to perform action" };
+      return { message: "Unable to perform action" };
     }
   }
   return redirect(`/login?redirect_url=${request.url}`);
@@ -52,10 +56,13 @@ export default function Page({ loaderData: { items } }: Route.ComponentProps) {
       {
         ...values,
         items: JSON.stringify(
-          items.map((item: any) => ({ id: item.id, quantity: item.quantity }))
+          items.map((item: any) => ({
+            productId: item.id,
+            quantity: item.quantity,
+          }))
         ),
       },
-      { method: "POST" }
+      { method: "POST", encType: "application/json" }
     );
   }
 

@@ -1,4 +1,5 @@
 import type { Session } from "~/database/schema.server";
+import { OrderStatus } from "./enums";
 
 export type SessionValidationResult =
   | { session: Session; user: User }
@@ -24,8 +25,6 @@ export type CartItem = {
   name: string;
   image: string;
 };
-
-import { OrderStatus, UserType } from "./enums";
 
 export type Product = {
   id: string;
@@ -74,4 +73,9 @@ export type ProductOrder = {
   discount: string;
   quantity: string;
   createdAt: Date;
+};
+
+export type OrderItemDto = {
+  productId: string;
+  quantity: number;
 };

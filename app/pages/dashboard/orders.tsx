@@ -1,4 +1,4 @@
-import { orderService } from "~/services/order-service.server";
+import { orderService } from "~/services/orderService.server";
 import type { Route } from "./+types/orders";
 import { Card, Table, Tag } from "antd";
 import { ButtonLink } from "~/components/link";

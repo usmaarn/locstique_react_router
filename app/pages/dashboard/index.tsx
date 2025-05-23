@@ -11,7 +11,7 @@ import {
 import { OrderStatus, UserType } from "~/lib/enums";
 import type { Route } from "./+types/index";
 import { ChartTable } from "~/components/dashboard/chart-table";
-import { orderService } from "~/services/order-service.server";
+import { orderService } from "~/services/orderService.server";
 import RecentOrders from "~/components/dashboard/recent-orders";
 
 export async function loader({}: Route.LoaderArgs) {

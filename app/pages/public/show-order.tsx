@@ -1,9 +1,9 @@
-import { orderService } from "~/services/order-service.server";
+import { orderService } from "~/services/orderService.server";
 import type { Route } from "./+types/show-order";
 import {
   paymentService,
   type OrderItem,
-} from "~/services/payment-service.server";
+} from "~/services/flutterwavePaymentService";
 import { data } from "react-router";
 import { Avatar, Card, Col, Input, List, Row, Space, Tag } from "antd";
 import { calculateDiscount, getImageSrc } from "~/lib/utils";
